@@ -1,7 +1,7 @@
 $ = jQuery
 
 $.fn.extend
-  mapSearch: (options) ->
+  birdseye: (options) ->
 
     settings =
 
@@ -63,7 +63,7 @@ $.fn.extend
         count: (data) -> data.meta.count
 
       # Element where we'll be inserting our results.
-      results_el: $("#mapsearch-results")
+      results_el: $("#birdseye-results")
 
       # A function that returns the HTML string for a single result.
       # You're definitely gonna need to customize this one.
@@ -73,7 +73,7 @@ $.fn.extend
         "
 
       # Element where we'll be inserting our pagination.
-      pagination_el: $("#mapsearch-pagination")
+      pagination_el: $("#birdseye-pagination")
 
       # A function that returns HTML for the pagination controls.
       pagination_template: (pagination) ->
@@ -82,11 +82,11 @@ $.fn.extend
           Total Pages: #{pagination.total_pages}<br />
           Count: #{pagination.count}<br />
           Per Page: #{pagination.per_page}<br />
-          <a href='#' data-mapsearch-role='change-page' data-mapsearch-pagenumber='#{pagination.page - 1}'>previous page</a><br />
-          <a href='#' data-mapsearch-role='change-page' data-mapsearch-pagenumber='#{pagination.page + 1}'>next page</a>
+          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page - 1}'>previous page</a><br />
+          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page + 1}'>next page</a>
         "
 
-    # Extend our settings with the options passed in the intial mapSearch() call.
+    # Extend our settings with the options passed in the intial birdseye() call.
     settings = $.extend settings, options
 
     # The search parameters used in the last request.
@@ -162,7 +162,7 @@ $.fn.extend
     map.on 'dragend zoomend', () ->
       exports.change_page(1); # also makes request
 
-    $(document).on "click", "[data-mapsearch-role=change-page]", () -> exports.change_page($(this).data('mapsearch-pagenumber'));
+    $(document).on "click", "[data-birdseye-role=change-page]", () -> exports.change_page($(this).data('birdseye-pagenumber'));
 
 
     # ====================================================

@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+  <title>jQuery Birdseye Demo</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/leaflet_numbered_markers.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="birdseye-map"></div>
+  <div id="birdseye-results"></div>
+  <div id="birdseye-pagination"></div>
+
+  <script src="js/jquery-1.7.1.min.js"></script>
+  <script src="js/leaflet.js"></script>
+  <script src="js/leaflet.numbered_markers.js"></script>
+  <script src="js/jquery.birdseye.js"></script>
+  <script>
+    $(function(){
+      $("#birdseye-map").birdseye({
+        request_uri: 'http://sbadb.presidentialinnovationfellows.org/v1/bizs',
+        response_params_latlng: function(result){
+          return [result.latlon[1], result.latlon[0]]
+        }
+      });
+
+      $("#birdseye-map").birdseye.update();
+    });
+
+  </script>
+</body>
+</html>
