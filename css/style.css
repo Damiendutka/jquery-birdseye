@@ -1,4 +1,82 @@
-#birdseye-map {
-  width: 200px;
-  height: 200px;
+body {
+  padding-top: 20px;
+}
+a {
+  cursor: pointer;
+}
+.birdseye-map {
+  width: 100%;
+  height: 300px;
+}
+.map-container {
+  background-color: #000;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.filters {
+  background-color: #eee;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+}
+.filters input,
+.filters select,
+.filters button {
+  margin-bottom: 0;
+  margin-right: 20px;
+  display: inline-block;
+}
+.filters button {
+  float: right;
+}
+.filters select {
+  width: 100px;
+}
+.filters label {
+  display: inline-block;
+}
+.birdseye-results > div {
+  position: relative;
+  padding: 10px;
+}
+.birdseye-results > div:nth-child(odd) {
+  background-color: #dedede;
+}
+.birdseye-results > div .number {
+  position: absolute;
+  left: 12px;
+  top: 30px;
+}
+.birdseye-results > div .content {
+  margin-left: 35px;
+}
+.birdseye-results > div .content p {
+  margin: 0;
+}
+.birdseye-pagination {
+  padding: 5px;
+}
+.birdseye-pagination div {
+  display: inline;
+}
+.birdseye-pagination .counts {
+  font-weight: bold;
+}
+.birdseye-pagination ul {
+  display: inline;
+}
+.birdseye-pagination ul li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 3px;
+}
+.birdseye-pagination ul li:after {
+  content: '/';
+  margin-left: 3px;
+}
+.birdseye-pagination ul li:last-child:after {
+  content: ' ';
+}
+.birdseye-pagination .prev-next {
+  float: right;
 }
