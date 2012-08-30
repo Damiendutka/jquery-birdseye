@@ -18,25 +18,27 @@
     <hr />
 
     <div class="sixteen columns filters">
-      <input name="location" type="text" placeholder="Location" />
-      <select name="yrest">
-        <option value="">Reg Year</option>
-        <option value="2007">2007</option>
-        <option value="2008">2008</option>
-        <option value="2009">2009</option>
-        <option value="2010">2010</option>
-        <option value="2011">2011</option>
-        <option value="2012">2012</option>
-      </select>
-      <label>
-        Women-owned
-        <input type="checkbox" name="women" />
-      </label>
-      <label>
-        Accepts Gov Credit Cards
-        <input type="checkbox" name="gcc" />
-      </label>
-      <button>Filter Results</button>
+      <form>
+        <input name="location" type="text" placeholder="Location" />
+        <select name="yrest">
+          <option value="">Reg Year</option>
+          <option value="2003">2003</option>
+          <option value="2004">2004</option>
+          <option value="2005">2005</option>
+          <option value="2006">2006</option>
+          <option value="2007">2007</option>
+          <option value="2008">2008</option>
+        </select>
+        <label>
+          Women-owned
+          <input type="checkbox" name="women" />
+        </label>
+        <label>
+          Accepts Gov Credit Cards
+          <input type="checkbox" name="gcc" />
+        </label>
+        <button>Filter Results</button>
+      </form>
     </div>
 
     <div class="ten columns">
@@ -68,7 +70,9 @@
                   + '<div class="content clearfix">'
                     + '<h5>'+result.name+'</h5>'
                     + '<div class="four columns alpha">'
-                      + '<p>'+result.address+'<br />'+result.city+', '+result.state+' '+result.zip+'</p>'
+                      + result.address+'<br />'+result.city+', '+result.state+' '+result.zip
+                      + '<br />'
+                      + 'Reg Year: ' + result.yrest
                     + '</div>'
                     + '<div class="four columns omega">'
                       + 'Women Owned: '+result.women+'<br />'
@@ -80,6 +84,29 @@
       });
 
       $(".birdseye-map").birdseye.update();
+    });
+
+    $(document).on("submit", "form", function(e){
+      e.preventDefault();
+
+      var location = $("input[name=location]").val(),
+          params = {};
+
+      if ($("select[name=yrest]").val() !== "") params["yrest"] = $("select[name=yrest]").val();
+      if ($("input[name=women]").is(":checked")) params["women"] = true;
+      if ($("input[name=gcc]").is(":checked")) params["gcc"] = true;
+
+      if (location && location !== "") {
+        $.getJSON('http://50.17.218.115/street2coordinates/'+location+'?callback=?', function(json){
+          var results = json[Object.keys(json)[0]];
+          if (results === null) return alert("Couldn't find location.");
+          $(".birdseye-map").birdseye.set_view([results.latitude, results.longitude], 10, false);
+          $(".birdseye-map").birdseye.update(params);
+        });
+      } else {
+        $(".birdseye-map").birdseye.update(params);
+      }
+
     });
 
   </script>

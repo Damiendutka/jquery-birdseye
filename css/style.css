@@ -19,6 +19,9 @@ a {
   box-sizing: border-box;
   margin-bottom: 30px;
 }
+.filters form {
+  margin: 0;
+}
 .filters input,
 .filters select,
 .filters button {
