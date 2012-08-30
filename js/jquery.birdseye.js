@@ -53,7 +53,7 @@
         pagination_template: function(pagination) {
           var i, loopTimes, p, str, _i, _j;
           str = "              <div class='counts'>                " + ((pagination.page - 1) * pagination.per_page + 1) + "                  to                " + ((pagination.page * pagination.per_page) > pagination.count ? pagination.count : pagination.page * pagination.per_page) + "                of " + pagination.count + "              </div>              |              Go to page:              <ul class='pages'>              ";
-          loopTimes = ((pagination.total_pages - pagination.page) < 5 ? 9 - (pagination.total_pages - pagination.page) : 4);
+          loopTimes = ((pagination.total_pages - pagination.page) < 5 ? 8 - (pagination.total_pages - pagination.page) : 4);
           p = pagination.page - loopTimes - 1;
           for (i = _i = 1; 1 <= loopTimes ? _i <= loopTimes : _i >= loopTimes; i = 1 <= loopTimes ? ++_i : --_i) {
             p = p + 1;

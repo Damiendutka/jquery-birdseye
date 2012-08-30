@@ -89,7 +89,7 @@ $.fn.extend
               <ul class='pages'>
               "
 
-        loopTimes = (if (pagination.total_pages - pagination.page) < 5 then (9 - (pagination.total_pages - pagination.page)) else 4)
+        loopTimes = (if (pagination.total_pages - pagination.page) < 5 then (8 - (pagination.total_pages - pagination.page)) else 4)
         p = pagination.page - loopTimes - 1
         for i in [1..loopTimes]
           p = p + 1
