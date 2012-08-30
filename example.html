@@ -2,15 +2,54 @@
 <head>
   <title>jQuery Birdseye Demo</title>
   <meta name="description" content="">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/leaflet.css">
   <link rel="stylesheet" href="css/leaflet_numbered_markers.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div id="birdseye-map"></div>
-  <div id="birdseye-results"></div>
-  <div id="birdseye-pagination"></div>
+
+  <div class="container">
+
+    <h3>jQuery Birdseye</h3>
+
+    <hr />
+
+    <div class="sixteen columns filters">
+      <input name="location" type="text" placeholder="Location" />
+      <select name="yrest">
+        <option value="">Reg Year</option>
+        <option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+        <option value="2010">2010</option>
+        <option value="2011">2011</option>
+        <option value="2012">2012</option>
+      </select>
+      <label>
+        Women-owned
+        <input type="checkbox" name="women" />
+      </label>
+      <label>
+        Accepts Gov Credit Cards
+        <input type="checkbox" name="gcc" />
+      </label>
+      <button>Filter Results</button>
+    </div>
+
+    <div class="ten columns">
+      <div class="birdseye-pagination"></div>
+      <div class="birdseye-results"></div>
+      <div class="birdseye-pagination"></div>
+    </div>
+
+    <div class="six columns map-container">
+      <div class="birdseye-map"></div>
+    </div>
+
+  </div>
 
   <script src="js/jquery-1.7.1.min.js"></script>
   <script src="js/leaflet.js"></script>
@@ -18,14 +57,29 @@
   <script src="js/jquery.birdseye.js"></script>
   <script>
     $(function(){
-      $("#birdseye-map").birdseye({
-        request_uri: 'http://sbadb.presidentialinnovationfellows.org/v1/bizs',
+      $(".birdseye-map").birdseye({
+        request_uri: 'http://localhost:3000/v1/bizs',
         response_params_latlng: function(result){
           return [result.latlon[1], result.latlon[0]]
+        },
+        results_template: function(key, result) {
+          return '<div>'
+                  + '<div class="number">#'+key+'</div>'
+                  + '<div class="content clearfix">'
+                    + '<h5>'+result.name+'</h5>'
+                    + '<div class="four columns alpha">'
+                      + '<p>'+result.address+'<br />'+result.city+', '+result.state+' '+result.zip+'</p>'
+                    + '</div>'
+                    + '<div class="four columns omega">'
+                      + 'Women Owned: '+result.women+'<br />'
+                      + 'Accepts Gov Credit Cards: '+result.gcc
+                    + '</div>'
+                  + '</div>'
+              + '</div>';
         }
       });
 
-      $("#birdseye-map").birdseye.update();
+      $(".birdseye-map").birdseye.update();
     });
 
   </script>

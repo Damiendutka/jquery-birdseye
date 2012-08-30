@@ -9,7 +9,7 @@ $.fn.extend
       initial_coordinates: [40, -100]
 
       # Intial map zoom.
-      initial_zoom: 4
+      initial_zoom: 3
 
       # Leaflet tile layer.
       tile_layer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -63,7 +63,7 @@ $.fn.extend
         count: (data) -> data.meta.count
 
       # Element where we'll be inserting our results.
-      results_el: $("#birdseye-results")
+      results_el: $(".birdseye-results")
 
       # A function that returns the HTML string for a single result.
       # You're definitely gonna need to customize this one.
@@ -73,18 +73,48 @@ $.fn.extend
         "
 
       # Element where we'll be inserting our pagination.
-      pagination_el: $("#birdseye-pagination")
+      pagination_el: $(".birdseye-pagination")
 
       # A function that returns HTML for the pagination controls.
       pagination_template: (pagination) ->
-        "
-          Current Page: #{pagination.page}<br />
-          Total Pages: #{pagination.total_pages}<br />
-          Count: #{pagination.count}<br />
-          Per Page: #{pagination.per_page}<br />
-          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page - 1}'>previous page</a><br />
-          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page + 1}'>next page</a>
-        "
+        str = "
+              <div class='counts'>
+                #{(pagination.page - 1) * pagination.per_page + 1}
+                  to
+                #{if (pagination.page * pagination.per_page) > pagination.count then pagination.count else (pagination.page * pagination.per_page)}
+                of #{pagination.count}
+              </div>
+              |
+              Go to page:
+              <ul class='pages'>
+              "
+
+        loopTimes = (if (pagination.total_pages - pagination.page) < 5 then (9 - (pagination.total_pages - pagination.page)) else 4)
+        p = pagination.page - loopTimes - 1
+        for i in [1..loopTimes]
+          p = p + 1
+          continue if p < 1
+          str += "<li><a data-birdseye-role='change-page' data-birdseye-pagenumber='#{p}'>#{p}</a></li>"
+
+        str += "<li>#{pagination.page}</li>"
+
+        loopTimes = (if pagination.page < 5 then (9 - pagination.page) else 4)
+        p = pagination.page
+        for i in [1..loopTimes]
+          p = p + 1
+          continue if p > pagination.total_pages
+          str += "<li><a data-birdseye-role='change-page' data-birdseye-pagenumber='#{p}'>#{p}</a></li>"
+
+        str += "
+                </ul>
+                <div class='prev-next'>
+                  <a data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page - 1}'>Previous</a>
+                  |
+                  <a data-birdseye-role='change-page' data-birdseye-pagenumber='#{pagination.page + 1}'>Next</a>
+                </div>
+                "
+
+        return str
 
     # Extend our settings with the options passed in the intial birdseye() call.
     settings = $.extend settings, options

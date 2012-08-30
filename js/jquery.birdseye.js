@@ -10,7 +10,7 @@
         _this = this;
       settings = {
         initial_coordinates: [40, -100],
-        initial_zoom: 4,
+        initial_zoom: 3,
         tile_layer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         request_uri: '',
         request_geo_params: {
@@ -45,13 +45,35 @@
             return data.meta.count;
           }
         },
-        results_el: $("#birdseye-results"),
+        results_el: $(".birdseye-results"),
         results_template: function(key, result) {
           return "        <div># " + key + ": " + result['name'] + "</div>        ";
         },
-        pagination_el: $("#birdseye-pagination"),
+        pagination_el: $(".birdseye-pagination"),
         pagination_template: function(pagination) {
-          return "          Current Page: " + pagination.page + "<br />          Total Pages: " + pagination.total_pages + "<br />          Count: " + pagination.count + "<br />          Per Page: " + pagination.per_page + "<br />          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='" + (pagination.page - 1) + "'>previous page</a><br />          <a href='#' data-birdseye-role='change-page' data-birdseye-pagenumber='" + (pagination.page + 1) + "'>next page</a>        ";
+          var i, loopTimes, p, str, _i, _j;
+          str = "              <div class='counts'>                " + ((pagination.page - 1) * pagination.per_page + 1) + "                  to                " + ((pagination.page * pagination.per_page) > pagination.count ? pagination.count : pagination.page * pagination.per_page) + "                of " + pagination.count + "              </div>              |              Go to page:              <ul class='pages'>              ";
+          loopTimes = ((pagination.total_pages - pagination.page) < 5 ? 9 - (pagination.total_pages - pagination.page) : 4);
+          p = pagination.page - loopTimes - 1;
+          for (i = _i = 1; 1 <= loopTimes ? _i <= loopTimes : _i >= loopTimes; i = 1 <= loopTimes ? ++_i : --_i) {
+            p = p + 1;
+            if (p < 1) {
+              continue;
+            }
+            str += "<li><a data-birdseye-role='change-page' data-birdseye-pagenumber='" + p + "'>" + p + "</a></li>";
+          }
+          str += "<li>" + pagination.page + "</li>";
+          loopTimes = (pagination.page < 5 ? 9 - pagination.page : 4);
+          p = pagination.page;
+          for (i = _j = 1; 1 <= loopTimes ? _j <= loopTimes : _j >= loopTimes; i = 1 <= loopTimes ? ++_j : --_j) {
+            p = p + 1;
+            if (p > pagination.total_pages) {
+              continue;
+            }
+            str += "<li><a data-birdseye-role='change-page' data-birdseye-pagenumber='" + p + "'>" + p + "</a></li>";
+          }
+          str += "                </ul>                <div class='prev-next'>                  <a data-birdseye-role='change-page' data-birdseye-pagenumber='" + (pagination.page - 1) + "'>Previous</a>                  |                  <a data-birdseye-role='change-page' data-birdseye-pagenumber='" + (pagination.page + 1) + "'>Next</a>                </div>                ";
+          return str;
         }
       };
       settings = $.extend(settings, options);
