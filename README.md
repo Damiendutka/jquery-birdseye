@@ -41,7 +41,7 @@ $(function(){
 
 ### Methods
 
-#### $("#map").birdseye(options)
+`$("#map").birdseye(options)`
 Passed a blank div, initializes birdseye's map in that div.
 
 ##### Options
@@ -124,11 +124,11 @@ pagination_template: (pagination) ->
 
 ```
 
-#### $("#map").birdseye.setView(latlng, zoom, updateMap = true)
+`$("#map").birdseye.setView(latlng, zoom, updateMap = true)`
 Sets the map's center and zoom level, and by default, makes an AJAX request to update the results.
 
-#### $("#map").birdseye.update(new_params)
+`$("#map").birdseye.update(new_params)`
 Searches the API with `new_params` and displays the results.
 
-#### $("#map").change_page(page)
+`$("#map").change_page(page)`
 Switches the currently-dispalyed results page.
