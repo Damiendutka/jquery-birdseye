@@ -16,15 +16,15 @@ While jQuery Birdseye does most of the heavylifting for you, it still needs a de
 
 HTML:
 
-'''html
+```html
 <div class="birdseye-map"></div>
 <div class="birdseye-results"></div>
 <div class="birdseye-pagination"></div>
-'''
+```
 
 Javascript:
 
-'''javascript
+```javascript
 $(function(){
   $(".birdseye-map").birdseye({
     request_uri: 'http://sbadb.herokuapp.com/v1/bizs',
@@ -35,7 +35,7 @@ $(function(){
 
   $(".birdseye-map").birdseye.update();
 });
-'''
+```
 
 ## Documentation
 
@@ -46,7 +46,7 @@ Passed a blank div, initializes birdseye's map in that div.
 
 ##### Options
 
-'''coffeescript
+```coffeescript
 
 # Initial map lat/lng.
 initial_coordinates: [40, -100]
@@ -122,7 +122,7 @@ pagination_el: $(".birdseye-pagination")
 pagination_template: (pagination) ->
   ...
 
-'''
+```
 
 #### $("#map").birdseye.setView(latlng, zoom, updateMap = true)
 Sets the map's center and zoom level, and by default, makes an AJAX request to update the results.
