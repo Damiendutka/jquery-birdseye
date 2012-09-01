@@ -4,7 +4,7 @@ A plugin for moving-map search built with jQuery & Leaflet, by [@AdamJacobBecker
 
 ## About
 
-jQuery Birdseye is a plugin for replicating the "search in map" functionality of Yelp/AirBnB/Google using the API of your choosing. With a small bit of setup, you can have the sweet, mapsearchy goodness that these sites do, at a fraction of the cost.
+jQuery Birdseye is a plugin for replicating the "search in map" functionality of Yelp/Airbnb/Google using the API of your choosing. With a small bit of setup, you can have the sweet, mapsearchy goodness that these sites do, at a fraction of the cost.
 
 ## Usage
 
