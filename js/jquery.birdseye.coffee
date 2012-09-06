@@ -72,6 +72,11 @@ $.fn.extend
         <div># #{key}: #{result['name']}</div>
         "
 
+      no_results_template: () ->
+        "
+        <div>Sorry, no results found.</div>
+        "
+
       # Element where we'll be inserting our pagination.
       pagination_el: $(".birdseye-pagination")
 
@@ -79,7 +84,7 @@ $.fn.extend
       pagination_template: (pagination) ->
         str = "
               <div class='counts'>
-                #{(pagination.page - 1) * pagination.per_page + 1}
+                #{if pagination.count is 0 then "0" else (pagination.page - 1) * pagination.per_page + 1}
                   to
                 #{if (pagination.page * pagination.per_page) > pagination.count then pagination.count else (pagination.page * pagination.per_page)}
                 of #{pagination.count}
@@ -161,14 +166,17 @@ $.fn.extend
       settings.results_el.html('')
       map.removeLayer(marker) for marker in markers
 
-      $(results).each (key, result) ->
-        key = key + 1
-        new_marker = L.marker settings.response_params_latlng(result),
-          icon: new L.NumberedDivIcon
-            number: key
-        markers.push new_marker.addTo(map)
+      if results.length > 0
+        $(results).each (key, result) ->
+          key = key + 1
+          new_marker = L.marker settings.response_params_latlng(result),
+            icon: new L.NumberedDivIcon
+              number: key
+          markers.push new_marker.addTo(map)
 
-        settings.results_el.append(settings.results_template(key, result))
+          settings.results_el.append(settings.results_template(key, result))
+      else
+        settings.results_el.append(settings.no_results_template())
 
     # ====================================================
     # Add pagination
@@ -190,7 +198,7 @@ $.fn.extend
     # Attach event handlers
     # ----------------------------------------------------
     map.on 'dragend zoomend', () ->
-      exports.change_page(1); # also makes request
+      makeAjaxRequest($.extend current_params, {page: 1})
 
     $(document).on "click", "[data-birdseye-role=change-page]", () -> exports.change_page($(this).data('birdseye-pagenumber'));
 

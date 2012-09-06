@@ -49,10 +49,13 @@
         results_template: function(key, result) {
           return "        <div># " + key + ": " + result['name'] + "</div>        ";
         },
+        no_results_template: function() {
+          return "        <div>Sorry, no results found.</div>        ";
+        },
         pagination_el: $(".birdseye-pagination"),
         pagination_template: function(pagination) {
           var i, loopTimes, p, str, _i, _j;
-          str = "              <div class='counts'>                " + ((pagination.page - 1) * pagination.per_page + 1) + "                  to                " + ((pagination.page * pagination.per_page) > pagination.count ? pagination.count : pagination.page * pagination.per_page) + "                of " + pagination.count + "              </div>              |              Go to page:              <ul class='pages'>              ";
+          str = "              <div class='counts'>                " + (pagination.count === 0 ? "0" : (pagination.page - 1) * pagination.per_page + 1) + "                  to                " + ((pagination.page * pagination.per_page) > pagination.count ? pagination.count : pagination.page * pagination.per_page) + "                of " + pagination.count + "              </div>              |              Go to page:              <ul class='pages'>              ";
           loopTimes = ((pagination.total_pages - pagination.page) < 5 ? 8 - (pagination.total_pages - pagination.page) : 4);
           p = pagination.page - loopTimes - 1;
           for (i = _i = 1; 1 <= loopTimes ? _i <= loopTimes : _i >= loopTimes; i = 1 <= loopTimes ? ++_i : --_i) {
@@ -111,17 +114,21 @@
           marker = markers[_i];
           map.removeLayer(marker);
         }
-        return $(results).each(function(key, result) {
-          var new_marker;
-          key = key + 1;
-          new_marker = L.marker(settings.response_params_latlng(result), {
-            icon: new L.NumberedDivIcon({
-              number: key
-            })
+        if (results.length > 0) {
+          return $(results).each(function(key, result) {
+            var new_marker;
+            key = key + 1;
+            new_marker = L.marker(settings.response_params_latlng(result), {
+              icon: new L.NumberedDivIcon({
+                number: key
+              })
+            });
+            markers.push(new_marker.addTo(map));
+            return settings.results_el.append(settings.results_template(key, result));
           });
-          markers.push(new_marker.addTo(map));
-          return settings.results_el.append(settings.results_template(key, result));
-        });
+        } else {
+          return settings.results_el.append(settings.no_results_template());
+        }
       };
       processPagination = function(data) {
         var page_params;
@@ -136,7 +143,9 @@
         return pagination_status = page_params;
       };
       map.on('dragend zoomend', function() {
-        return exports.change_page(1);
+        return makeAjaxRequest($.extend(current_params, {
+          page: 1
+        }));
       });
       $(document).on("click", "[data-birdseye-role=change-page]", function() {
         return exports.change_page($(this).data('birdseye-pagenumber'));
