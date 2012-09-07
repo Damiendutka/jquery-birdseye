@@ -48,6 +48,10 @@ Passed a blank div, initializes birdseye's map in that div.
 
 ```coffeescript
 
+
+# Show animated loading bar while waiting for results.
+loading_indicator: true
+
 # Initial map lat/lng.
 initial_coordinates: [40, -100]
 

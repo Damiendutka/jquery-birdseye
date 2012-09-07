@@ -3,7 +3,12 @@ $ = jQuery
 $.fn.extend
   birdseye: (options) ->
 
+    map_el = this
+
     settings =
+
+      # Show animated loading bar while waiting for results.
+      loading_indicator: true
 
       # Initial map lat/lng.
       initial_coordinates: [40, -100]
@@ -148,6 +153,10 @@ $.fn.extend
 
       current_params = request_params
 
+      if settings.loading_indicator
+        map_el.addClass('loading')
+        settings.results_el.addClass('loading')
+
       $.ajax
         url: settings.request_uri + "?" + $.param(request_params)
         type: 'GET'
@@ -158,6 +167,10 @@ $.fn.extend
             processResults(data)
 
           processPagination(data)
+
+          if settings.loading_indicator
+            map_el.removeClass('loading')
+            settings.results_el.removeClass('loading')
 
     # ====================================================
     # Process the returned json

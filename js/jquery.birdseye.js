@@ -6,9 +6,11 @@
 
   $.fn.extend({
     birdseye: function(options) {
-      var current_params, exports, makeAjaxRequest, map, markers, pagination_status, processPagination, processResults, settings,
+      var current_params, exports, makeAjaxRequest, map, map_el, markers, pagination_status, processPagination, processResults, settings,
         _this = this;
+      map_el = this;
       settings = {
+        loading_indicator: true,
         initial_coordinates: [40, -100],
         initial_zoom: 3,
         tile_layer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -94,6 +96,10 @@
           request_params[key] = func(map);
         }
         current_params = request_params;
+        if (settings.loading_indicator) {
+          map_el.addClass('loading');
+          settings.results_el.addClass('loading');
+        }
         return $.ajax({
           url: settings.request_uri + "?" + $.param(request_params),
           type: 'GET',
@@ -103,7 +109,11 @@
             } else {
               processResults(data);
             }
-            return processPagination(data);
+            processPagination(data);
+            if (settings.loading_indicator) {
+              map_el.removeClass('loading');
+              return settings.results_el.removeClass('loading');
+            }
           }
         });
       };

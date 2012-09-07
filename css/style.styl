@@ -21,6 +21,20 @@ img.ribbon
 .birdseye-map
   width 100%
   height 300px
+  position relative
+
+  &.loading
+    opacity 0.9
+
+    &:after
+      content ' '
+      background url('../images/loading.gif') no-repeat
+      position absolute
+      width 44px
+      height 11px
+      left 50%
+      top 50%
+      margin -6px 0 0 -22px
 
 .map-container
   background-color black
@@ -51,6 +65,21 @@ img.ribbon
     display inline-block
 
 .birdseye-results
+  position relative
+
+  &.loading
+    opacity 0.6
+
+    &:after
+      content ' '
+      background url('../images/loading.gif') no-repeat
+      position absolute
+      width 44px
+      height 11px
+      left 50%
+      top 140px
+      margin -6px 0 0 -22px
+
   > div
     position relative
     padding 10px

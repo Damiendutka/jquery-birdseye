@@ -21,6 +21,20 @@ img.ribbon {
 .birdseye-map {
   width: 100%;
   height: 300px;
+  position: relative;
+}
+.birdseye-map.loading {
+  opacity: 0.9;
+}
+.birdseye-map.loading:after {
+  content: ' ';
+  background: url("../images/loading.gif") no-repeat;
+  position: absolute;
+  width: 44px;
+  height: 11px;
+  left: 50%;
+  top: 50%;
+  margin: -6px 0 0 -22px;
 }
 .map-container {
   background-color: #000;
@@ -51,6 +65,22 @@ img.ribbon {
 }
 .filters label {
   display: inline-block;
+}
+.birdseye-results {
+  position: relative;
+}
+.birdseye-results.loading {
+  opacity: 0.6;
+}
+.birdseye-results.loading:after {
+  content: ' ';
+  background: url("../images/loading.gif") no-repeat;
+  position: absolute;
+  width: 44px;
+  height: 11px;
+  left: 50%;
+  top: 140px;
+  margin: -6px 0 0 -22px;
 }
 .birdseye-results > div {
   position: relative;
