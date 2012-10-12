@@ -103,6 +103,7 @@
         return $.ajax({
           url: settings.request_uri + "?" + $.param(request_params),
           type: 'GET',
+          dataType: 'json',
           success: function(data) {
             if (settings.response_json_key) {
               processResults(data[settings.response_json_key]);
