@@ -8,7 +8,7 @@ jQuery Birdseye is a plugin for replicating the "search in map" functionality of
 
 ## Usage
 
-#### [Live Demo](http://ada.mbecker.cc/jquery-birdseye)
+#### [Live Demo](http://ajb.github.io/jquery-birdseye/)
 
 While jQuery Birdseye does most of the heavylifting for you, it still needs a decent amount of configuration. For example, search results will be displayed differently for each application, and will need to be customized accordingly.
 
